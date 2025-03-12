@@ -171,7 +171,7 @@ bla bla ... with a little help from my friends
 ├── README.md
 └── tree.bak
 
-5 directories, 21 files
+6 directories, 21 files
 ```
 <!-- readme-tree end -->
 
