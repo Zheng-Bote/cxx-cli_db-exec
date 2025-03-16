@@ -7,7 +7,7 @@ cmake_minimum_required(VERSION 3.23)
 
 project(
   db_test
-  VERSION 0.1.0
+  VERSION 0.2.0
   DESCRIPTION "cli app to deploy db"
   HOMEPAGE_URL "https://github.com/Zheng-Bote/"
   LANGUAGES CXX)
@@ -37,6 +37,8 @@ set(SRC_LIST main.cpp
   includes/rz_config.h
   includes/dotenv.h
   includes/inicpp.h
+  includes/rz_db.h
+  includes/rz_parse_sqlfile.h
   includes/rz_inifile.cpp includes/rz_inifile.h
   includes/rz_snippets.cpp includes/rz_snippets.h
 )

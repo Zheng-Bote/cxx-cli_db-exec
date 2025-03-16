@@ -40,11 +40,21 @@ public:
     enum class Status
     {
         OK,
+        WARNING,
         ERROR,
         FATAL
     };
     bool checkFunctionReturn(std::tuple<bool, std::string> const &ret,
                              Status statusInstruction = Snippets::Status::ERROR);
+
+    template <typename CharT>
+    using tstring = std::basic_string<CharT, std::char_traits<CharT>, std::allocator<CharT>>;
+
+    template <typename CharT>
+    using tstringstream = std::basic_stringstream<CharT, std::char_traits<CharT>, std::allocator<CharT>>;
+
+    template <typename CharT>
+    tstring<CharT> trim(tstring<CharT> &text);
 
 private:
 };

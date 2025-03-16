@@ -48,7 +48,8 @@ public:
         std::string password{""};
         std::string username{""};
     };
-    struct dbType getDBConnectString(std::string &section);
+    struct dbType getDBConnectStruct(std::string &section);
+    std::string dbConnectString{""};
 
     void getUniqueSectionTypes();
     void setOrderedType(std::string &type);

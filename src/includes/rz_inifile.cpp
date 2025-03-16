@@ -188,9 +188,11 @@ void Inifile::listIniSectionEntries(std::string section)
     }
 }
 
-Inifile::dbType Inifile::getDBConnectString(std::string &section)
+Inifile::dbType Inifile::getDBConnectStruct(std::string &section)
 {
     dbType dbConnectStruct;
+    std::string hostname{""};
+    int port{0};
 
     dbConnectStruct.hostname = myIni[section]["hostname"].as<std::string>();
     dbConnectStruct.port = myIni[section]["port"].as<int>();
@@ -200,6 +202,18 @@ Inifile::dbType Inifile::getDBConnectString(std::string &section)
     dbConnectStruct.dbname = myIni[section]["dbname"].as<std::string>();
     dbConnectStruct.password = myIni[section]["password"].as<std::string>();
     dbConnectStruct.username = myIni[section]["username"].as<std::string>();
+
+    if (dbConnectStruct.use_proxy)
+    {
+        hostname = dbConnectStruct.db_proxy;
+        port = dbConnectStruct.db_proxy_port;
+    }
+    else
+    {
+        hostname = dbConnectStruct.hostname;
+        port = dbConnectStruct.port;
+    }
+    dbConnectString = "user=" + dbConnectStruct.username + " password=" + dbConnectStruct.password + " host=" + hostname + " port=" + std::to_string(port) + " dbname=" + dbConnectStruct.dbname + " target_session_attrs=read-write";
 
     return dbConnectStruct;
 }

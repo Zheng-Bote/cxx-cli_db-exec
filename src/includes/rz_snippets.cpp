@@ -7,6 +7,12 @@
 
 #include "rz_config.h"
 
+template <typename CharT>
+using tstring = std::basic_string<CharT, std::char_traits<CharT>, std::allocator<CharT>>;
+
+template <typename CharT>
+using tstringstream = std::basic_stringstream<CharT, std::char_traits<CharT>, std::allocator<CharT>>;
+
 /**
  * @brief Snippets::Snippets
  */
@@ -22,7 +28,7 @@ Snippets::~Snippets()
 std::string Snippets::helpSyntax()
 {
     AboutType aboutStruct;
-    return std::format("call: {} ini dev type", aboutStruct.PROGEXECNAME);
+    return std::format("call: {} db_ini sql_ini env type", aboutStruct.PROGEXECNAME);
 }
 
 /**
@@ -43,19 +49,37 @@ bool Snippets::checkFunctionReturn(const std::tuple<bool, std::string> &ret,
     if (!oknok)
     {
         // std::cerr << std::format("checkFunction NOK: {}", msg);
+        // \e[0m	Reset // \x1B[39m
         switch (status)
         {
         case Status::OK:
+            std::cout << "\033[0;32m" << "OK: " << msg << "\e[0m" << std::endl;
+            oknok = true;
+            break;
+        case Status::WARNING:
+            std::cerr << "\033[0;33m" << "WARNING: " << msg << "\e[0m" << std::endl;
+            oknok = false;
             break;
         case Status::ERROR:
-            std::cerr << "\n\033[0;31m" << "ERROR: " << msg << "\n\x1B[39m" << std::endl;
+            std::cerr << "\033[0;31m" << "ERROR: " << msg << "\e[0m" << std::endl;
             oknok = false;
             break;
         case Status::FATAL:
-            std::cerr << "\n\033[0;31m" << "FATAL: " << msg << "\n\x1B[39m" << std::endl;
+            std::cerr << "\033[0;31m" << "FATAL: " << msg << "\e[0m" << std::endl;
             exit(EXIT_FAILURE);
             break;
         }
     }
+    else
+    {
+        std::cout << "\033[0;32m" << "OK: " << msg << "\e[0m" << std::endl;
+        oknok = true;
+    }
     return oknok;
+}
+
+template <typename CharT>
+inline tstring<CharT> Snippets::trim(tstring<CharT> &text)
+{
+    return tstring<CharT>();
 }

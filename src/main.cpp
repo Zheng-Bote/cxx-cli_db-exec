@@ -1,19 +1,23 @@
 #include <iostream>
 #include <print>
 #include <memory>
+#include <pqxx/pqxx>
 
 #include "includes/rz_inifile.h"
 #include "includes/rz_snippets.h"
+#include "includes/rz_db.h"
+#include "includes/rz_parse_sqlfile.h"
 
-#include <pqxx/pqxx>
-
-auto sptr_ini_config = std::make_shared<Inifile>();
+auto sptr_dbini_config = std::make_shared<Inifile>();
+auto sptr_sqlini_config = std::make_shared<Inifile>();
 auto sptr_snippets = std::make_shared<Snippets>();
 
 int main(int argc, char *argv[])
 {
-  std::string dbSystemIni, env, type, msg = "";
-  if (argc < 4)
+
+  // deployment =>
+  std::string dbSystemIni, dbSqlIni, env, type, msg = "";
+  if (argc < 5)
   {
     std::cerr << "\n\033[0;31m" << "FATAL: wrong parameters" << "\n\x1B[39m" << std::endl;
     std::cout << sptr_snippets->helpSyntax() << std::endl;
@@ -22,46 +26,29 @@ int main(int argc, char *argv[])
   else
   {
     dbSystemIni = argv[1];
-    env = argv[2];
-    type = argv[3];
+    dbSqlIni = argv[2];
+    env = argv[3];
+    type = argv[4];
   }
 
-  std::println("args: {} ini: {} env: {} type: {}", argc, dbSystemIni, env, type);
+  std::println("args: {} ini: {} env: {} type: {}", argc, dbSystemIni, dbSqlIni, env, type);
+  // <= deployment
 
-  Snippets::AboutType about;
-  std::println("Prog Info: {}", about.getProgInfo());
+  sptr_dbini_config->setIniFileName(dbSystemIni);
+  sptr_snippets->checkFunctionReturn(sptr_dbini_config->loadIni(dbSystemIni), Snippets::Status::FATAL);
 
-  sptr_ini_config->setIniFileName(dbSystemIni);
-  sptr_snippets->checkFunctionReturn(sptr_ini_config->loadIni(dbSystemIni), Snippets::Status::FATAL);
+  sptr_sqlini_config->setIniFileName(dbSqlIni);
+  sptr_snippets->checkFunctionReturn(sptr_sqlini_config->loadIni(dbSqlIni), Snippets::Status::FATAL);
+  sptr_snippets->checkFunctionReturn(rz_db::setDbConnect(sptr_dbini_config, env), Snippets::Status::OK);
 
-  sptr_ini_config->setOrderedType(type);
+  // Tests
+  // Snippets::AboutType about;
+  // std::println("Prog Info: {}", about.getProgInfo());
+  rz_db::getPhotos(sptr_snippets);
+  sptr_sqlini_config->setOrderedType(type);
 
-  /* OK https://libpqxx.readthedocs.io/stable/prepared.html#autotoc_md24
-    Inifile::dbType dbConnectData = sptr_ini_config->getDBConnectString(env);
+  rz_parse_sqlfile::parseSQLFile("test/example.sql");
 
-    pqxx::connection *dbConnect;
-    try
-    {
-      // pqxx::connection dbConnect("user=" + dbConnectData.username + " password=" + dbConnectData.password + " host=" + dbConnectData.hostname + " port=" + std::to_string(dbConnectData.port) + " dbname=" + dbConnectData.dbname + " target_session_attrs=read-write");
-      dbConnect = new pqxx::connection("user=" + dbConnectData.username + " password=" + dbConnectData.password + " host=" + dbConnectData.hostname + " port=" + std::to_string(dbConnectData.port) + " dbname=" + dbConnectData.dbname + " target_session_attrs=read-write");
-
-      pqxx::work db{*dbConnect};
-
-      pqxx::result rows{db.exec("SELECT file_name_orig FROM photo_main;")};
-      for (auto row : rows)
-      {
-        std::cout << row["file_name_orig"].c_str() << std::endl;
-      }
-    }
-    catch (std::exception const &e)
-    {
-      std::cerr << "\n\033[0;31m" << e.what() << "\n\x1B[39m" << std::endl;
-      exit(EXIT_FAILURE);
-    }
-
-    dbConnect->close();
-    delete dbConnect;
-    */
-
+  rz_db::closeDb(sptr_snippets);
   exit(EXIT_SUCCESS);
 }
