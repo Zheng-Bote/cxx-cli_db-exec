@@ -1,3 +1,15 @@
+/**
+ * @file rz_snippets.hpp
+ * @author ZHENG Bote (robert.hase-zheng.net)
+ * @brief CXX23 classlib with snippets
+ * @details ragpicker for unsorted methods
+ * @version 1.1.0
+ * @date 2023-04-15
+ *
+ * @copyright Copyright (c) 2023 ZHENG Robert
+ *
+ */
+
 #include "rz_snippets.h"
 
 #include <format>
@@ -25,6 +37,12 @@ Snippets::~Snippets()
 {
 }
 
+/**
+ * @brief helpSyntax
+ * @details call: rz_snippets db_ini sql_ini env type
+ *
+ * @return std::string
+ */
 std::string Snippets::helpSyntax()
 {
     AboutType aboutStruct;
@@ -76,10 +94,4 @@ bool Snippets::checkFunctionReturn(const std::tuple<bool, std::string> &ret,
         oknok = true;
     }
     return oknok;
-}
-
-template <typename CharT>
-inline tstring<CharT> Snippets::trim(tstring<CharT> &text)
-{
-    return tstring<CharT>();
 }

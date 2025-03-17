@@ -1,3 +1,13 @@
+/**
+ * @file rz_parse_sqlfile.h
+ * @author ZHENG Robert (www.robert.hase-zheng.net)
+ * @brief parse sql-file into vector of sql statements
+ * @version 0.1.0
+ * @date 2025-03-17
+ *
+ * @copyright Copyright (c) 2025 ZHENG Robert
+ *
+ */
 #pragma once
 
 #include <iostream>
@@ -6,70 +16,75 @@
 #include <string>
 #include <vector>
 #include <cctype>
+#include <tuple>
+#include <algorithm>
+#include <format>
 
 namespace rz_parse_sqlfile
 {
-  // Function to trim leading and trailing whitespaces
+  /**
+   * @brief trim leading/trailing spaces
+   *
+   * @param str
+   * @return std::string
+   */
   std::string trim(const std::string &str)
   {
-    size_t start = 0;
-    while (start < str.length() && std::isspace(str[start]))
-      start++;
+    auto start = str.find_first_not_of(" \t\n\r\f\v");
+    auto end = str.find_last_not_of(" \t\n\r\f\v");
 
-    size_t end = str.length();
-    while (end > start && std::isspace(str[end - 1]))
-      end--;
+    if (start == std::string::npos || end == std::string::npos)
+      return ""; // String is all whitespace
 
-    return str.substr(start, end - start);
+    return str.substr(start, end - start + 1);
   }
 
-  // Function to parse the SQL file and separate statements
-  void parseSQLFile(const std::string &filePath)
+  /**
+   * @brief parseSQLFile into vector of sql statements
+   * @details parse sql-file into vector of sql statements
+   * @param filePath
+   * @return std::tuple<bool, std::vector<std::string>>
+   */
+  std::tuple<bool, std::vector<std::string>> parseSQLFile(const std::string &filePath)
   {
     std::ifstream file(filePath);
-
-    if (!file.is_open())
-    {
-      std::cerr << "Failed to open file!" << std::endl;
-      return;
-    }
-
     std::string line;
     std::string sqlStatement;
     std::vector<std::string> statements;
+    statements.reserve(100);
 
-    // Read the file line by line
+    if (!file.is_open())
+    {
+      statements.push_back("rz_parse_sqlfile: Failed to open file!");
+      return std::make_tuple(false, statements);
+    }
+
     while (std::getline(file, line))
     {
       // Trim each line to remove leading/trailing spaces
       line = trim(line);
 
-      // Skip empty lines or comments
       if (line.empty() || line[0] == '-' || line[0] == '#')
       {
         continue;
       }
 
-      // Append the line to the current SQL statement
       sqlStatement += line + " ";
 
-      // If we find a semicolon, it's the end of the current statement
       if (line.back() == ';')
       {
-        statements.push_back(trim(sqlStatement));
+        statements.emplace_back(trim(sqlStatement));
         sqlStatement.clear(); // Reset for the next statement
       }
     }
 
     file.close();
 
-    // Print all parsed SQL statements
-    std::cout << "Parsed SQL Statements: " << std::endl;
-    for (const auto &statement : statements)
+    if (statements.empty())
     {
-      std::cout << statement << std::endl
-                << "------" << std::endl;
+      statements.push_back(std::format("rz_parse_sqlfile: No SQL statements found in file: {}", filePath));
+      return std::make_tuple(false, statements);
     }
+    return std::make_tuple(true, statements);
   }
-
 };

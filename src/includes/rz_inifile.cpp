@@ -188,6 +188,27 @@ void Inifile::listIniSectionEntries(std::string section)
     }
 }
 
+std::tuple<bool, std::string> Inifile::getStringValue(std::string &section, std::string &key)
+{
+    try
+    {
+        std::string val = myIni[section][key].as<std::string>();
+        if (val.empty())
+        {
+            return std::make_tuple(false, std::format("getStringValue: section [{}] attribute {}: empty value", section, key));
+        }
+        else
+        {
+            return std::make_tuple(true, val);
+        }
+    }
+    catch (std::exception const &e)
+    {
+        std::make_tuple(false, e.what());
+    }
+    return std::make_tuple(false, "getStringValue: unknown error");
+}
+
 Inifile::dbType Inifile::getDBConnectStruct(std::string &section)
 {
     dbType dbConnectStruct;
@@ -263,4 +284,31 @@ void Inifile::setOrderedType(std::string &type)
     {
         std::println("unique: {} - key: {}", e, orderedSections[e]);
     }
+}
+
+std::vector<std::string> Inifile::getOrderedType(std::string &type)
+{
+    std::vector<std::string> sortedSections;
+    std::vector<int> orderedId;
+    std::unordered_map<int, std::string> orderedSections;
+
+    for (const auto &sectionPair : myIni)
+    {
+        if (myIni[sectionPair.first]["type"].as<std::string>().compare(type) == 0)
+        {
+            orderedId.push_back(myIni[sectionPair.first]["id"].as<int>());
+            orderedSections[myIni[sectionPair.first]["id"].as<int>()] = sectionPair.first;
+        }
+    }
+
+    std::sort(orderedId.begin(), orderedId.end());
+    auto last = std::unique(orderedId.begin(), orderedId.end());
+    orderedId.erase(last, orderedId.end());
+
+    for (auto &e : orderedId)
+    {
+        sortedSections.push_back(orderedSections[e]);
+    }
+
+    return sortedSections;
 }

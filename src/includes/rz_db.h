@@ -1,3 +1,11 @@
+/**
+ * @file rz_db.h
+ * @author ZHENG Robert (www.robert.hase-zheng.net)
+ * @brief read db system attributes from inifile and connect to db
+ * @version 0.1.0
+ * @date 2025-03-17
+ * @copyright Copyright (c) 2025 ZHENG Robert *
+ */
 #pragma once
 
 #include <memory>
@@ -15,6 +23,13 @@ pqxx::connection *dbConnect;
 namespace rz_db
 {
 
+  /**
+   * @brief Set the Db Connect object
+   *
+   * @param sptr_dbini_config
+   * @param env (e.g. "test", "int", "prod")
+   * @return std::tuple<bool, std::string> (e.g. "false", "DB connect failed...")
+   */
   std::tuple<bool, std::string> setDbConnect(std::shared_ptr<Inifile> &sptr_dbini_config, std::string &env)
   {
     Inifile::dbType dbConnectData = sptr_dbini_config->getDBConnectStruct(env);
@@ -31,31 +46,25 @@ namespace rz_db
     return std::make_tuple(true, "DB connect successfull");
   }
 
-  void getPhotos(std::shared_ptr<Snippets> &sptr_snippets)
+  /**
+   * @brief Execute SQL statement
+   * @details no check/no protect for SQL Injection!
+   * @param sql
+   * @return std::tuple<bool, std::string> (e.g. "false", "Sql failed...")
+   */
+  std::tuple<bool, std::string> execSQL(std::string &sql)
   {
     try
     {
       pqxx::work db{*dbConnect};
-
-      pqxx::result rows{db.exec("SELECT file_name_orig FROM photo_main;")};
-      for (auto row : rows)
-      {
-        std::cout << row["file_name_orig"].c_str() << std::endl;
-      }
+      db.exec(sql);
+      db.commit();
     }
-    catch (std::exception const &e)
+    catch (const pqxx::sql_error &e)
     {
-      sptr_snippets->checkFunctionReturn(std::make_tuple(false, e.what()), Snippets::Status::WARNING);
+      return std::make_tuple(false, e.sqlstate() + ": " + e.what());
     }
+    return std::make_tuple(true, std::format("execSQL: {}", sql));
   }
 
-  void closeDb(std::shared_ptr<Snippets> &sptr_snippets)
-  {
-    dbConnect->close();
-    if (dbConnect != nullptr)
-    {
-      delete dbConnect;
-    }
-    sptr_snippets->checkFunctionReturn(std::make_tuple(true, "DB disconnected"), Snippets::Status::OK);
-  }
 };

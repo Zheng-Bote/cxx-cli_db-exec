@@ -14,10 +14,11 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 **Table of Contents**
 
 - [Description](#description)
-    - [Features](#features)
+  - [Features](#features)
   - [Status](#status)
     - [Application / Tool](#application--tool)
     - [Documentation](#documentation)
@@ -53,10 +54,10 @@
 
 # Description
 
-![CXX](https://img.shields.io/badge/C++-20-blue?logo=cplusplus)
+![CXX](https://img.shields.io/badge/C++-23-blue?logo=cplusplus)
 ![GHA](https://img.shields.io/badge/Github-Action-black?logo=githubactions)
 
-command line tool to execute sql.
+command line tool to execute sql in an ordered way.
 
 ### Features
 
@@ -79,7 +80,7 @@ command line tool to execute sql.
 
 - \[ ] runs on DOS/Windows
 - \[ ] runs on MacOS
-- \[ ] runs on Linux
+- \[x] runs on Linux
 - \[ ] runs on iOS
 - \[ ] runs on Android
 - \[ ] runs on HarmonyOS
@@ -132,6 +133,7 @@ bla bla ... with a little help from my friends
 ## folder structure
 
 <!-- readme-tree start -->
+
 ```
 .
 ├── .github
@@ -177,6 +179,7 @@ bla bla ... with a little help from my friends
 
 9 directories, 32 files
 ```
+
 <!-- readme-tree end -->
 
 <p align="right">(<a href="#top">back to top</a>)</p>

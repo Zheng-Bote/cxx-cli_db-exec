@@ -37,6 +37,8 @@ public:
     std::unordered_map<std::string, std::string> getIniEntries();
     void listIniSectionEntries(std::string section);
 
+    std::tuple<bool, std::string> getStringValue(std::string &section, std::string &key);
+
     struct dbType
     {
         std::string hostname{""};
@@ -53,6 +55,7 @@ public:
 
     void getUniqueSectionTypes();
     void setOrderedType(std::string &type);
+    std::vector<std::string> getOrderedType(std::string &type);
 
 private:
     ini::IniFile myIni;
