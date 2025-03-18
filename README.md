@@ -14,11 +14,10 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
 **Table of Contents**
 
 - [Description](#description)
-  - [Features](#features)
+    - [Features](#features)
   - [Status](#status)
     - [Application / Tool](#application--tool)
     - [Documentation](#documentation)
@@ -133,7 +132,6 @@ bla bla ... with a little help from my friends
 ## folder structure
 
 <!-- readme-tree start -->
-
 ```
 .
 ├── .github
@@ -170,16 +168,20 @@ bla bla ... with a little help from my friends
 │   │   ├── dotenv.h
 │   │   ├── inicpp.h
 │   │   ├── rz_config.h
+│   │   ├── rz_db.h
+│   │   ├── rz_fs.cpp
+│   │   ├── rz_fs.h
 │   │   ├── rz_inifile.cpp
 │   │   ├── rz_inifile.h
+│   │   ├── rz_parse_sqlfile.h
 │   │   ├── rz_snippets.cpp
-│   │   └── rz_snippets.h
+│   │   ├── rz_snippets.h
+│   │   └── rz_strings.h
 │   └── main.cpp
 └── tree.bak
 
-9 directories, 32 files
+9 directories, 37 files
 ```
-
 <!-- readme-tree end -->
 
 <p align="right">(<a href="#top">back to top</a>)</p>
