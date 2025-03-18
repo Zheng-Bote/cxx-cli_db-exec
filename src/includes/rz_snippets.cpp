@@ -71,26 +71,31 @@ bool Snippets::checkFunctionReturn(const std::tuple<bool, std::string> &ret,
         switch (status)
         {
         case Status::OK:
-            std::cout << "\033[0;32m" << "OK: " << msg << "\e[0m" << std::endl;
+            PLOG(plog::info) << msg;
+            // std::cout << "\033[0;32m" << "OK: " << msg << "\e[0m" << std::endl;
             oknok = true;
             break;
         case Status::WARNING:
-            std::cerr << "\033[0;33m" << "WARNING: " << msg << "\e[0m" << std::endl;
+            PLOG(plog::warning) << msg;
+            // std::cerr << "\033[0;33m" << "WARNING: " << msg << "\e[0m" << std::endl;
             oknok = false;
             break;
         case Status::ERROR:
-            std::cerr << "\033[0;31m" << "ERROR: " << msg << "\e[0m" << std::endl;
+            PLOG(plog::error) << msg;
+            // std::cerr << "\033[0;31m" << "ERROR: " << msg << "\e[0m" << std::endl;
             oknok = false;
             break;
         case Status::FATAL:
-            std::cerr << "\033[0;31m" << "FATAL: " << msg << "\e[0m" << std::endl;
+            PLOG(plog::fatal) << msg;
+            // std::cerr << "\033[0;31m" << "FATAL: " << msg << "\e[0m" << std::endl;
             exit(EXIT_FAILURE);
             break;
         }
     }
     else
     {
-        std::cout << "\033[0;32m" << "OK: " << msg << "\e[0m" << std::endl;
+        PLOG(plog::debug) << msg;
+        // std::cout << "\033[0;32m" << "OK: " << msg << "\e[0m" << std::endl;
         oknok = true;
     }
     return oknok;

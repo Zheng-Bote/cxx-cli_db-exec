@@ -13,11 +13,14 @@
 #include <filesystem>
 #include <vector>
 #include <iostream>
+#include <format>
 
 class Filesystem
 {
 public:
   Filesystem();
 
+  std::tuple<bool, std::string> isDirectory(const std::filesystem::path &path);
+  std::tuple<bool, std::string> createDirectories(const std::filesystem::path &path) noexcept;
   std::tuple<bool, std::vector<std::string>> listDirectoryItems(const std::filesystem::path &pathToDir, const std::string &filter = ".*");
 };

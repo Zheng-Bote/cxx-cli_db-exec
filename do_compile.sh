@@ -12,24 +12,19 @@ cmake -B . -S ../src -DCMAKE_BUILD_TYPE=${TARGET}
 
 if [[ $TARGET == "Release" ]]; then
     
-    echo "create AppImage"
-    mkdir -p ./AppDir/usr/bin/
-    cp ${BINARY} ./AppDir/usr/bin/.
-    ./linuxdeploy-plugin-appimage-x86_64.appimage --appdir ./AppDir
-    sha256sum ${BINARY}-x86_64.AppImage > ${BINARY}-x86_64.AppImage.sha256sum
-
-    echo "create deb package"
-    cp ${BINARY} ./${BINARY}/${BINARY}/usr/bin/.
-    dpkg-deb --build ${BINARY}
-    mv ${BINARY}.deb ${BINARY}-x86_64.deb
-    sha256sum ${BINARY}-x86_64.deb > ${BINARY}-x86_64.deb.sha256sum
+    #echo "create AppImage"
+    #mkdir -p ./Packaging/AppDir/usr/bin/
+    #cp ${BINARY} ./Packaging/AppDir/usr/bin/.
+    #./linuxdeploy-plugin-appimage-x86_64.appimage --appdir ./Packaging/AppDir
+    #sha256sum ${BINARY}-x86_64.AppImage > ${BINARY}-x86_64.AppImage.sha256sum
     
     echo "create SBoM"
-    mkdir ./sbom
+    cd .. 
     nvm use --lts
-    mkdir dist
-    /home/zb_bamboo/Downloads/bin/atom -J-Xmx16g usages -o app.atom --slice-outfile ./sbom/atom_usages_v0.1.0.json -l cpp ../src
-    cdxgen -o ./sbom/sbom_v0.1.0.json -t cpp --usages-slices-file ./sbom/atom_usages_v0.1.0.json --author "ZHENG Robert" --deep -r ../src
+    /home/zb_bamboo/Downloads/bin/atom -J-Xmx16g usages -o app.atom --slice-outfile ./build/Packaging/atom_usages_v0.0.0.json -l cpp ./src
+    cdxgen -o ./build/Packaging/sbom_v0.0.0.json -t cpp --usages-slices-file ./build/Packaging/atom_usages_v0.0.0.json --author "ZHENG Robert" --deep -r ./src
+
+    cd build
 else
     echo "compile Debug mode"
 fi

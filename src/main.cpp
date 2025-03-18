@@ -12,7 +12,13 @@
 #include <iostream>
 #include <print>
 #include <memory>
-#include <pqxx/pqxx>
+
+#include <plog/Appenders/ColorConsoleAppender.h>
+#include <plog/Appenders/RollingFileAppender.h>
+#include <plog/Formatters/TxtFormatter.h>
+#include <plog/Init.h>
+#include <plog/Initializers/RollingFileInitializer.h>
+#include <plog/Log.h>
 
 #include "includes/rz_inifile.h"
 #include "includes/rz_snippets.h"
@@ -29,7 +35,7 @@ int main(int argc, char *argv[])
 {
 
   // deployment =>
-  std::string dbSystemIni, dbSqlIni, env, type, msg = "";
+  std::string dbSystemIni, dbSqlIni, env, type, msg, logfile = "";
   if (argc < 5)
   {
     std::cerr << "\n\033[0;31m" << "FATAL: wrong parameters" << "\n\x1B[39m" << std::endl;
@@ -47,10 +53,59 @@ int main(int argc, char *argv[])
   std::println("args: {} ini: {} env: {} type: {}", argc, dbSystemIni, dbSqlIni, env, type);
   // <= deployment
 
+  Filesystem fs;
+  Snippets::AboutType about;
   std::tuple<bool, std::string> ret;
 
   sptr_dbini_config->setIniFileName(dbSystemIni);
   sptr_snippets->checkFunctionReturn(sptr_dbini_config->loadIni(dbSystemIni), Snippets::Status::FATAL);
+
+  /* ##### Logfile ##### */
+  // TODOS: passwords or other sensitive data in logfile
+  msg = "logfile_path";
+  logfile = std::filesystem::current_path();
+  ret = sptr_dbini_config->getStringValue(env, msg);
+  sptr_snippets->checkFunctionReturn(ret, Snippets::Status::WARNING);
+  if (std::get<0>(ret))
+  {
+    ret = fs.isDirectory(std::get<1>(ret));
+    if (!std::get<0>(ret))
+    {
+      ret = fs.createDirectories(std::get<1>(ret));
+      sptr_snippets->checkFunctionReturn(ret, Snippets::Status::ERROR);
+      if (!std::get<0>(ret))
+      {
+        logfile = std::filesystem::current_path();
+      }
+      else
+      {
+        logfile = std::get<1>(ret);
+      }
+    }
+    else
+    {
+      logfile = logfile = std::get<1>(ret);
+    }
+  }
+  if (!logfile.ends_with("/"))
+  {
+    logfile += "/";
+  }
+  logfile += about.PROGEXECNAME + ".log";
+  std::ifstream file(logfile);
+  if (!file.is_open())
+  {
+    logfile = std::filesystem::current_path();
+    logfile += "/" + about.PROGEXECNAME + ".log";
+  }
+
+  static plog::RollingFileAppender<plog::TxtFormatter> fileAppender(logfile.c_str(), 5000, 3);
+  plog::init(plog::debug, &fileAppender);
+  plog::ColorConsoleAppender<plog::TxtFormatter> consoleAppender;
+  plog::get()->addAppender(&consoleAppender); // Also add logging to the console.
+  PLOG(plog::none) << "Logfile: " << logfile;
+  // fileAppender.setFileName("SetFileNameBBB.log");
+  /* ##### Logfile ##### */
 
   sptr_sqlini_config->setIniFileName(dbSqlIni);
   sptr_snippets->checkFunctionReturn(sptr_sqlini_config->loadIni(dbSqlIni), Snippets::Status::FATAL);
@@ -101,7 +156,6 @@ int main(int argc, char *argv[])
     sptr_snippets->checkFunctionReturn(ret, Snippets::Status::WARNING);
     if (std::get<0>(ret))
     {
-      Filesystem fs;
       std::string sqlpath = std::get<1>(ret);
       std::tuple<bool, std::vector<std::string>> retV = fs.listDirectoryItems(sqlpath, ".sql");
       std::vector<std::string> dirItem = std::get<1>(retV);
@@ -154,6 +208,6 @@ int main(int argc, char *argv[])
   }
 
   /* ##### the END ##### */
-  rz_db::closeDb(sptr_snippets);
+  // rz_db::closeDb(sptr_snippets);
   exit(EXIT_SUCCESS);
 }

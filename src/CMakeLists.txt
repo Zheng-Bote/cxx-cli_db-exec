@@ -1,9 +1,21 @@
 cmake_minimum_required(VERSION 3.23)
+
+# cd src
+# pipx install conan
+# pipx upgrade conan
+# conan remote update conancenter --url="https://center2.conan.io"
+# conan install . -s:b compiler=clang --output-folder=../build --build=missing
+
 # -DCMAKE_BUILD_TYPE=Release
 # -DCMAKE_BUILD_TYPE=Debug
 # cmake -B . -S ../src -DCMAKE_BUILD_TYPE=Debug
 # cmake --build . --parallel 6
 # cmake --build . --target doxygen
+
+# CPack
+# su -
+# export QTIFWDIR=/opt/Qt/Tools/QtInstallerFramework/4.8/bin
+# cpack -G "IFW;ZIP;DEB;RPM" -B Packaging
 
 project(
   db_test
@@ -18,10 +30,13 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
   set(CMAKE_CXX_COMPILER clang++)
 endif()
 
+set(CMAKE_PREFIX_PATH "${CMAKE_BUILD_DIR}")
+
 set(PROG_EXEC_NAME "${PROJECT_NAME}")
 set(PROG_NAME "DB deployments")
 set(PROG_VERSION "${PROJECT_VERSION}")
 set(PROG_HOMEPAGE "${PROJECT_HOMEPAGE_URL}")
+set(PROG_AUTHOR "ZHENG Robert")
 set(PROG_DESCRIPTION "${PROJECT_DESCRIPTION}")
 set(PROG_BUILD_TYPE "${CMAKE_BUILD_TYPE}")
 
@@ -32,6 +47,10 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lpqxx -lpq")
 
 find_library(PQXX_LIB pqxx)
 find_library(PQ_LIB pq)
+
+find_package(plog REQUIRED)
+find_package(cxxopts REQUIRED)
+
 
 set(SRC_LIST main.cpp 
   includes/rz_config.h
@@ -62,7 +81,9 @@ IF(CMAKE_BUILD_TYPE MATCHES Debug)
   #addclangtidy(${PROJECT_NAME})
 ENDIF()
 
-target_link_libraries(${PROJECT_NAME} ${PQXX_LIB} ${PQ_LIB})
+target_link_libraries(${PROJECT_NAME} ${PQXX_LIB} ${PQ_LIB} ${CONAN_LIBS} plog::plog cxxopts::cxxopts)
+#target_link_libraries(${PROJECT_NAME} ${PQXX_LIB} ${PQ_LIB})
+
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_23)
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
@@ -105,6 +126,25 @@ install(
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
   )
+
+install(TARGETS ${PROJECT_NAME} RUNTIME_DEPENDENCY_SET libDeps)
+install(RUNTIME_DEPENDENCY_SET libDeps)
+
+# IFW needs to set external export QTIFWDIR=...
+set(QTIFWDIR "/opt/Qt/Tools/QtInstallerFramework/4.8/bin")
+include(InstallRequiredSystemLibraries)
+set(CPACK_IFW_ROOT "${GLOBAL}/Qt/Tools/QtInstallerFramework/4.8")
+set(CPACK_RESOURCE_FILE_LICENSE  ${CMAKE_CURRENT_SOURCE_DIR}/../LICENSE)
+set(CPACK_PACKAGE_VENDOR "${PROG_AUTHOR}")
+set(CPACK_PACKAGE_CONTACT "${PROJECT_HOMEPAGE_URL}")
+set(CPACK_PACKAGE_DESCRIPTION "${PROJECT_DESCRIPTION}")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "DB deployments")
+set(CPACK_THREADS "6")
+set(CPACK_PACKAGE_CHECKSUM SHA256)
+set(CPACK_GENERATOR "IFW;DEB;ZIP;TBZ2;RPM")
+set(CPACK_PACKAGE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/Packaging")
+
+include(CPack)
 
 # the end
 message("Build with CMake version: ${CMAKE_VERSION} and c++${CMAKE_CXX_STANDARD}")

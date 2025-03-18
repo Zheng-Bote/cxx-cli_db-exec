@@ -6,3 +6,4 @@
 #define PROG_HOMEPAGE "https://github.com/Zheng-Bote/"
 #define PROG_DESCRIPTION "cli app to deploy db"
 #define PROG_BUILD_TYPE "Debug"
+#define PROG_AUTHOR "ZHENG Robert"

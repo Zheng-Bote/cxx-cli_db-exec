@@ -15,6 +15,7 @@
 #include <print>
 #include <string>
 #include <tuple>
+#include <plog/Log.h>
 
 #include "rz_config.h"
 
