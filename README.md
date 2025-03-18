@@ -157,8 +157,13 @@ bla bla ... with a little help from my friends
 ├── LICENSE
 ├── README.md
 ├── do_compile.sh
+├── docs
+│   ├── .gitkeep
+│   └── img
+│       └── console_logs.png
 ├── src
 │   ├── CMakeLists.txt
+│   ├── conanfile.txt
 │   ├── configure
 │   │   ├── ClangTidy.cmake
 │   │   ├── Doxygen.cmake
@@ -180,7 +185,7 @@ bla bla ... with a little help from my friends
 │   └── main.cpp
 └── tree.bak
 
-9 directories, 37 files
+11 directories, 40 files
 ```
 <!-- readme-tree end -->
 
