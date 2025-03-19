@@ -14,7 +14,6 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
 **Table of Contents**
 
 - [Description](#description)
@@ -361,7 +360,6 @@ Plog - portable, simple and extensible C++ logging library
 ## folder structure
 
 <!-- readme-tree start -->
-
 ```
 .
 ├── .github
@@ -419,7 +417,6 @@ Plog - portable, simple and extensible C++ logging library
 
 11 directories, 42 files
 ```
-
 <!-- readme-tree end -->
 
 <p align="right">(<a href="#top">back to top</a>)</p>
