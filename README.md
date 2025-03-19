@@ -110,7 +110,7 @@ command line tool to execute sql in an ordered way.
   - each section has an `id` so sections with same `type`-definition will be sorted ascending for execution
   - each section has an attribute `sql_string` which will be executed in this section first
   - each section has an attribute `sql_file` which will executed in this section as second (the sql-file will be parsed and each sql-statement within this file will be executed)
-  - each section has an attribute `sql_path` which will executed in this section as third (all sql-files in the defined folder, starting with `<number>_<filename>.sql` will be sorted ascending, parsed and each sql-statement within this file will be executed). SQL-files in this folder whithout prefix `<number>_` will be ignored.
+  - each section has an attribute `sql_path` which will executed in this section as third (all sql-files in the defined folder, starting with `<number>_<filename>.sql` will be sorted ascending, parsed and each sql-statement within this file will be executed). SQL-files in this folder without prefix `<number>_` will be ignored.
 
 > \[!WARNING]
 > please keep in mind about case sensitivity
@@ -238,7 +238,7 @@ sql_file=
 sql_path=./sql/schemas/
 
 [betab4]
-id=2
+id=5
 type=fdw
 name=foreign_data_wrapper
 active=false
