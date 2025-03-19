@@ -379,8 +379,13 @@ Plog - portable, simple and extensible C++ logging library
 ├── LICENSE
 ├── README.md
 ├── do_compile.sh
+├── docs
+│   ├── .gitkeep
+│   └── img
+│       └── console_logs.png
 ├── src
 │   ├── CMakeLists.txt
+│   ├── conanfile.txt
 │   ├── configure
 │   │   ├── ClangTidy.cmake
 │   │   ├── Doxygen.cmake
@@ -402,7 +407,7 @@ Plog - portable, simple and extensible C++ logging library
 │   └── main.cpp
 └── tree.bak
 
-9 directories, 37 files
+11 directories, 40 files
 ```
 
 <!-- readme-tree end -->
