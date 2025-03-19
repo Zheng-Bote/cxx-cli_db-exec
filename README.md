@@ -14,6 +14,7 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 **Table of Contents**
 
 - [Description](#description)
@@ -287,6 +288,13 @@ Several installation packages are available, depending on your Linux system (deb
 > \[!NOTE]
 > All licenses are therefore Open Source.
 
+### Conan
+
+Conan, software package manager for C and C++ developers
+
+[![Conan](https://img.shields.io/badge/Conan-v2+-6699CB?logo=conan)](https://github.com/conan-io/conan)
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+
 ### CMake
 
 CMake: A Powerful Software Build System
@@ -343,6 +351,7 @@ Plog - portable, simple and extensible C++ logging library
 ## folder structure
 
 <!-- readme-tree start -->
+
 ```
 .
 ├── .github
@@ -400,6 +409,7 @@ Plog - portable, simple and extensible C++ logging library
 
 11 directories, 42 files
 ```
+
 <!-- readme-tree end -->
 
 <p align="right">(<a href="#top">back to top</a>)</p>
