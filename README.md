@@ -103,8 +103,15 @@ command line tool to execute sql in an ordered way.
   - each section has an attribute `sql_file` which will executed in this section as second (the sql-file will be parsed and each sql-statement within this file will be executed)
   - each section has an attribute `sql_path` which will executed in this section as third (all sql-files in the defined folder, starting with `<number>_<filename>.sql` will be sorted ascending, parsed and each sql-statement within this file will be executed). SQL-files in this folder without prefix `<number>_` will be ignored.
 
-> \[!WARNING]
+> \[!IMPORTANT]
 > please keep in mind about case sensitivity
+
+> \[!CAUTION]
+> it's highly recommended to encrypt your DB system Inifile.\
+> Encrypt before upload to Git repository\
+> Decrypt before using and encrypt after using
+
+_see also:_ [qt-cli_file_encryption-decryption](https://github.com/Zheng-Bote/qt-cli_file_encryption-decryption)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -136,8 +143,12 @@ run the tool and deploy schema definitions in dev environment
 
 #### example DB system ini
 
-> \[!WARNING]
-> please keep in mind about case sensitivity
+> \[!CAUTION]
+> it's highly recommended to encrypt your DB system Inifile.\
+> Encrypt before upload to Git repository\
+> Decrypt before using and encrypt after using
+
+_see also:_ [qt-cli_file_encryption-decryption](https://github.com/Zheng-Bote/qt-cli_file_encryption-decryption)
 
 ```ini
 [dev]
@@ -197,7 +208,7 @@ logfile_path=/var/log/
 
 #### example DB sql ini
 
-> \[!WARNING]
+> \[!IMPORTANT]
 > please keep in mind about case sensitivity
 
 ```ini
