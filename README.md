@@ -353,7 +353,6 @@ Plog - portable, simple and extensible C++ logging library
 ## folder structure
 
 <!-- readme-tree start -->
-
 ```
 .
 ├── .github
@@ -400,6 +399,8 @@ Plog - portable, simple and extensible C++ logging library
 │   │   ├── rz_fs.h
 │   │   ├── rz_inifile.cpp
 │   │   ├── rz_inifile.h
+│   │   ├── rz_logpath.h
+│   │   ├── rz_options.h
 │   │   ├── rz_parse_sqlfile.h
 │   │   ├── rz_snippets.cpp
 │   │   ├── rz_snippets.h
@@ -407,9 +408,8 @@ Plog - portable, simple and extensible C++ logging library
 │   └── main.cpp
 └── tree.bak
 
-11 directories, 40 files
+11 directories, 42 files
 ```
-
 <!-- readme-tree end -->
 
 <p align="right">(<a href="#top">back to top</a>)</p>
