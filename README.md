@@ -14,7 +14,6 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
 **Table of Contents**
 
 - [Description](#description)
@@ -27,6 +26,7 @@
       - [example DB sql ini](#example-db-sql-ini)
 - [Installation](#installation)
   - [Dependencies](#dependencies)
+    - [Conan](#conan)
     - [CMake](#cmake)
     - [Doxygen](#doxygen)
       - [Doxygen Awesome](#doxygen-awesome)
