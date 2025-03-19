@@ -104,7 +104,7 @@ command line tool to execute sql in an ordered way.
   - each section has an attribute `sql_file` which will executed in this section as second (the sql-file will be parsed and each sql-statement within this file will be executed)
   - each section has an attribute `sql_path` which will executed in this section as third (all sql-files in the defined folder, starting with `<number>_<filename>.sql` will be sorted ascending, parsed and each sql-statement within this file will be executed). SQL-files in this folder without prefix `<number>_` will be ignored.
 
-> \[!IMPORTANT]
+> \[!WARNING]
 > please keep in mind about case sensitivity
 
 > \[!CAUTION]
@@ -207,7 +207,7 @@ logfile_path=/var/log/
 
 #### example DB sql ini
 
-> \[!IMPORTANT]
+> \[!WARNING]
 > please keep in mind about case sensitivity
 
 ```ini
@@ -225,8 +225,8 @@ id=1
 type=trigger
 name=triggers
 active=true
-sql_string=./sql/schemas/trigger/trigger_starter.sql
-sql_file=
+sql_string=
+sql_file=./sql/schemas/trigger/trigger_starter.sql
 sql_path=
 
 [notab3]
@@ -243,8 +243,8 @@ id=5
 type=fdw
 name=foreign_data_wrapper
 active=false
-sql_string=
-sql_file=#./test/not_exist.sql
+sql_string=CREATE USER MAPPING FOR master SERVER geoapi  OPTIONS (user 'apiuser', password 'admin1234');
+sql_file=#./sql/schemas/fdw/geoapi.sql
 sql_path=
 
 [istab5]
@@ -252,7 +252,7 @@ id=3
 type=data
 name=test_data
 active=true
-sql_string=
+sql_string=INSERT INTO photo_location(id,continent, country, country_code, province, city, district) VALUES (10,'EU', 'Germoney', 'de', 'Bavaria', 'Munich', 'gma');
 sql_file=
 sql_path=./sql/data/photo_gallery
 
@@ -272,7 +272,7 @@ name=mytable3
 active=false
 sql_string=
 sql_file=
-sql_path=./test
+sql_path=#./test
 
 [dotab8]
 id=23
