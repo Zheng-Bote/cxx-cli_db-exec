@@ -14,6 +14,7 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 **Table of Contents**
 
 - [Description](#description)
@@ -109,9 +110,8 @@ command line tool to execute sql in an ordered way.
 > \[!CAUTION]
 > it's highly recommended to encrypt your DB system Inifile.\
 > Encrypt before upload to Git repository\
-> Decrypt before using and encrypt after using
-
-_see also:_ [qt-cli_file_encryption-decryption](https://github.com/Zheng-Bote/qt-cli_file_encryption-decryption)
+> Decrypt before using and encrypt after using\
+> _see also:_ [qt-cli_file_encryption-decryption](https://github.com/Zheng-Bote/qt-cli_file_encryption-decryption)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -138,7 +138,7 @@ Usage:
 run the tool and deploy schema definitions in dev environment
 
 ```cli
-./db_deploy -c /iac/photo_gallery/db/db_system.ini -s /iac/photo_gallery/db/deploy/db_sql.ini -e dev -t schema
+./db_deploy -c /iac/photo_gallery/db/db_system.ini -s /iac/photo_gallery/db/deploy/db_sql.ini --env dev --type schema
 ```
 
 #### example DB system ini
@@ -146,9 +146,8 @@ run the tool and deploy schema definitions in dev environment
 > \[!CAUTION]
 > it's highly recommended to encrypt your DB system Inifile.\
 > Encrypt before upload to Git repository\
-> Decrypt before using and encrypt after using
-
-_see also:_ [qt-cli_file_encryption-decryption](https://github.com/Zheng-Bote/qt-cli_file_encryption-decryption)
+> Decrypt before using and encrypt after using\
+> _see also:_ [qt-cli_file_encryption-decryption](https://github.com/Zheng-Bote/qt-cli_file_encryption-decryption)
 
 ```ini
 [dev]
@@ -362,6 +361,7 @@ Plog - portable, simple and extensible C++ logging library
 ## folder structure
 
 <!-- readme-tree start -->
+
 ```
 .
 ├── .github
@@ -419,6 +419,7 @@ Plog - portable, simple and extensible C++ logging library
 
 11 directories, 42 files
 ```
+
 <!-- readme-tree end -->
 
 <p align="right">(<a href="#top">back to top</a>)</p>
