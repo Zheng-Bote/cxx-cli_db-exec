@@ -14,35 +14,25 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
 **Table of Contents**
 
 - [Description](#description)
   - [Features](#features)
-  - [Status](#status)
-    - [Application / Tool](#application--tool)
-    - [Documentation](#documentation)
-      - [README](#readme)
-      - [other Markdown files](#other-markdown-files)
+- [Status](#status)
+- [Documentation](#documentation)
+  - [Usage](#usage)
+    - [Example](#example)
+      - [example DB system ini](#example-db-system-ini)
+      - [example DB sql ini](#example-db-sql-ini)
 - [Installation](#installation)
   - [Dependencies](#dependencies)
+    - [CMake](#cmake)
+    - [Doxygen](#doxygen)
+      - [Doxygen Awesome](#doxygen-awesome)
+    - [cxxopts](#cxxopts)
+    - [inifile-cpp](#inifile-cpp)
+    - [plog](#plog)
   - [folder structure](#folder-structure)
-  - [Usage/Examples/Tests](#usageexamplestests)
-- [API Reference](#api-reference)
-  - [Inputs](#inputs)
-  - [Outputs](#outputs)
-  - [Parameters](#parameters)
-- [Documentation](#documentation-1)
-  - [Architecture](#architecture)
-    - [Github](#github)
-      - [Github Repo](#github-repo)
-      - [Github Actions / Workflows](#github-actions--workflows)
-  - [Application](#application)
-  - [DevOps](#devops)
-  - [Github Page](#github-page)
-  - [Github Wiki](#github-wiki)
-  - [Comments](#comments)
-  - [Screenshots](#screenshots)
 - [Authors and License](#authors-and-license)
   - [License](#license)
   - [Authors](#authors)
@@ -353,7 +343,6 @@ Plog - portable, simple and extensible C++ logging library
 ## folder structure
 
 <!-- readme-tree start -->
-
 ```
 .
 ├── .github
@@ -400,6 +389,8 @@ Plog - portable, simple and extensible C++ logging library
 │   │   ├── rz_fs.h
 │   │   ├── rz_inifile.cpp
 │   │   ├── rz_inifile.h
+│   │   ├── rz_logpath.h
+│   │   ├── rz_options.h
 │   │   ├── rz_parse_sqlfile.h
 │   │   ├── rz_snippets.cpp
 │   │   ├── rz_snippets.h
@@ -407,9 +398,8 @@ Plog - portable, simple and extensible C++ logging library
 │   └── main.cpp
 └── tree.bak
 
-11 directories, 40 files
+11 directories, 42 files
 ```
-
 <!-- readme-tree end -->
 
 <p align="right">(<a href="#top">back to top</a>)</p>
