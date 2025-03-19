@@ -55,7 +55,7 @@ namespace rz_parse_sqlfile
 
     if (!file.is_open())
     {
-      statements.push_back("rz_parse_sqlfile: Failed to open file!");
+      statements.push_back(std::format("{}: Failed to open file: {}", __FUNCTION__, filePath));
       return std::make_tuple(false, statements);
     }
 
@@ -82,7 +82,7 @@ namespace rz_parse_sqlfile
 
     if (statements.empty())
     {
-      statements.push_back(std::format("rz_parse_sqlfile: No SQL statements found in file: {}", filePath));
+      statements.push_back(std::format("{}: No SQL statements found in file: {}", __FUNCTION__, filePath));
       return std::make_tuple(false, statements);
     }
     return std::make_tuple(true, statements);

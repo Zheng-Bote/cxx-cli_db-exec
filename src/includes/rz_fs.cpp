@@ -23,9 +23,9 @@ std::tuple<bool, std::string> Filesystem::isDirectory(const std::filesystem::pat
   if (std::filesystem::is_directory(path))
   {
     ;
-    return std::make_tuple(true, std::format("is directory: {}", path.c_str()));
+    return std::make_tuple(true, std::format("{}: is directory: {}", __FUNCTION__, path.c_str()));
   }
-  return std::make_tuple(false, std::format("is not a directory: {}", path.c_str()));
+  return std::make_tuple(false, std::format("{}: is not a directory: {}", __FUNCTION__, path.c_str()));
 }
 
 std::tuple<bool, std::string> Filesystem::createDirectories(const std::filesystem::path &path) noexcept
@@ -38,20 +38,20 @@ std::tuple<bool, std::string> Filesystem::createDirectories(const std::filesyste
   {
     if (std::filesystem::create_directories(nested))
     {
-      msg = std::format("createDirectories: {}", path.c_str());
+      msg = std::format("{}: createDirectories: {}", __FUNCTION__, path.c_str());
       ret = true;
     }
     else
     {
-      std::cerr << "createDirectories: Failed to create nested directories: " << path.c_str() << std::endl;
-      msg = std::format("createDirectories: Failed to create nested directories: {}", path.c_str());
+      // std::cerr << "createDirectories: Failed to create nested directories: " << path.c_str() << std::endl;
+      msg = std::format("{}: createDirectories: Failed to create nested directories: {}", __FUNCTION__, path.c_str());
       ret = false;
     }
   }
   catch (const std::exception &ex)
   {
-    std::cerr << "createDirectories: Exception Failed to create nested directories: " << path.c_str() << std::endl;
-    msg = std::format("createDirectories: Exception Failed to create nested directories: {} - {}", path.c_str(), ex.what());
+    // std::cerr << "createDirectories: Exception Failed to create nested directories: " << path.c_str() << std::endl;
+    msg = std::format("{}: createDirectories: Exception Failed to create nested directories: {} - {}", __FUNCTION__, path.c_str(), ex.what());
     ret = false;
   }
 

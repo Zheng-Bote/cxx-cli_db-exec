@@ -12,6 +12,7 @@
 #include <string>
 #include <tuple>
 #include <pqxx/pqxx>
+#include <format>
 
 #include "rz_inifile.h"
 #include "rz_snippets.h"
@@ -39,11 +40,11 @@ namespace rz_db
     }
     catch (std::exception const &e)
     {
-      return std::make_tuple(false, e.what());
+      return std::make_tuple(false, std::format("{}: {}", __FUNCTION__, e.what()));
       // std::cerr << "\n\033[0;31m" << e.what() << "\n\x1B[39m" << std::endl;
       // exit(EXIT_FAILURE);
     }
-    return std::make_tuple(true, "DB connect successfull");
+    return std::make_tuple(true, std::format("{}: DB connect successfull", __FUNCTION__));
   }
 
   /**
@@ -62,9 +63,9 @@ namespace rz_db
     }
     catch (const pqxx::sql_error &e)
     {
-      return std::make_tuple(false, e.sqlstate() + ": " + e.what());
+      return std::make_tuple(false, std::format("{}: {}: {}", __FUNCTION__, e.sqlstate(), e.what()));
     }
-    return std::make_tuple(true, std::format("execSQL: {}", sql));
+    return std::make_tuple(true, std::format("{}: {}", __FUNCTION__, sql));
   }
 
 };

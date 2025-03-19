@@ -18,10 +18,10 @@ cmake_minimum_required(VERSION 3.23)
 # cpack -G "IFW;ZIP;DEB;RPM" -B Packaging
 
 project(
-  db_test
-  VERSION 0.3.0
-  DESCRIPTION "cli app to deploy db"
-  HOMEPAGE_URL "https://github.com/Zheng-Bote/"
+  db_deploy
+  VERSION 1.0.0
+  DESCRIPTION "command line tool to execute sql in an ordered manner"
+  HOMEPAGE_URL "https://github.com/Zheng-Bote/cxx-cli_db-exec"
   LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23)
@@ -37,7 +37,9 @@ set(PROG_NAME "DB deployments")
 set(PROG_VERSION "${PROJECT_VERSION}")
 set(PROG_HOMEPAGE "${PROJECT_HOMEPAGE_URL}")
 set(PROG_AUTHOR "ZHENG Robert")
+set(PROG_AUTHOR_CONTACT "robert.hase-zheng.net")
 set(PROG_DESCRIPTION "${PROJECT_DESCRIPTION}")
+set(PROG_COPYRIGHT "Copyright (c) 2025 ZHENG Robert")
 set(PROG_BUILD_TYPE "${CMAKE_BUILD_TYPE}")
 
 configure_file("${CMAKE_SOURCE_DIR}/configure/rz_config.h.in"
@@ -57,6 +59,8 @@ set(SRC_LIST main.cpp
   includes/dotenv.h
   includes/inicpp.h
   includes/rz_db.h
+  includes/rz_options.h
+  includes/rz_logpath.h
   includes/rz_parse_sqlfile.h
   includes/rz_fs.cpp includes/rz_fs.h
   includes/rz_inifile.cpp includes/rz_inifile.h
@@ -136,13 +140,15 @@ include(InstallRequiredSystemLibraries)
 set(CPACK_IFW_ROOT "${GLOBAL}/Qt/Tools/QtInstallerFramework/4.8")
 set(CPACK_RESOURCE_FILE_LICENSE  ${CMAKE_CURRENT_SOURCE_DIR}/../LICENSE)
 set(CPACK_PACKAGE_VENDOR "${PROG_AUTHOR}")
-set(CPACK_PACKAGE_CONTACT "${PROJECT_HOMEPAGE_URL}")
+set(CPACK_PACKAGE_CONTACT "${PROG_AUTHOR_CONTACT}")
+set(CPACK_RPM_PACKAGE_VENDOR "${PROG_AUTHOR_CONTACT}")
 set(CPACK_PACKAGE_DESCRIPTION "${PROJECT_DESCRIPTION}")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "DB deployments")
 set(CPACK_THREADS "6")
 set(CPACK_PACKAGE_CHECKSUM SHA256)
-set(CPACK_GENERATOR "IFW;DEB;ZIP;TBZ2;RPM")
+set(CPACK_DEBIAN_PACKAGE_SECTION "database")
 set(CPACK_PACKAGE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/Packaging")
+set(CPACK_GENERATOR "IFW;DEB;ZIP;TBZ2;RPM")
 
 include(CPack)
 

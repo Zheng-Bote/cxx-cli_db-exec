@@ -102,11 +102,13 @@ std::tuple<bool, std::string> Inifile::saveIniToFile(std::string &pathToInifile)
  */
 std::tuple<bool, std::string> Inifile::loadIni(std::string &pathToInifile)
 {
+    std::string msg = __FUNCTION__;
+
     if (std::filesystem::exists(pathToInifile) == 0)
     {
         // std::cerr << "doesn't exist or is not readable: " << pathToInifile << std::endl;
         //  Inifile::pathToInifile = "";
-        return std::make_tuple(false, "doesn't exist or is not readable: " + pathToInifile);
+        return std::make_tuple(false, msg + ": doesn't exist or is not readable: " + pathToInifile);
     }
 
     Inifile::pathToInifile = pathToInifile;
@@ -114,12 +116,12 @@ std::tuple<bool, std::string> Inifile::loadIni(std::string &pathToInifile)
 
     if (myIni.size() < 1)
     {
-        std::cerr << "wrong INI size " << myIni.size() << ", should be at least 1 section." << std::endl;
+        // std::cerr << "wrong INI size " << myIni.size() << ", should be at least 1 section." << std::endl;
 
         return std::make_tuple(false,
-                               "wrong INI size, should be at least 1 section: " + std::to_string(myIni.size()));
+                               msg + ": wrong INI size, should be at least 1 section: " + std::to_string(myIni.size()));
     }
-    return std::make_tuple(true, "Inifile loaded: " + pathToInifile);
+    return std::make_tuple(true, msg + ": Inifile loaded: " + pathToInifile);
 }
 
 /**
@@ -190,12 +192,13 @@ void Inifile::listIniSectionEntries(std::string section)
 
 std::tuple<bool, std::string> Inifile::getStringValue(std::string &section, std::string &key)
 {
+
     try
     {
         std::string val = myIni[section][key].as<std::string>();
         if (val.empty())
         {
-            return std::make_tuple(false, std::format("getStringValue: section [{}] attribute {}: empty value", section, key));
+            return std::make_tuple(false, std::format("{}: getStringValue: section [{}] attribute {}: empty value", __FUNCTION__, section, key));
         }
         else
         {
@@ -204,7 +207,7 @@ std::tuple<bool, std::string> Inifile::getStringValue(std::string &section, std:
     }
     catch (std::exception const &e)
     {
-        std::make_tuple(false, e.what());
+        std::make_tuple(false, std::format("{}: {}", __FUNCTION__, e.what()));
     }
     return std::make_tuple(false, "getStringValue: unknown error");
 }
@@ -266,8 +269,11 @@ void Inifile::setOrderedType(std::string &type)
     {
         if (myIni[sectionPair.first]["type"].as<std::string>().compare(type) == 0)
         {
-            orderedId.push_back(myIni[sectionPair.first]["id"].as<int>());
-            orderedSections[myIni[sectionPair.first]["id"].as<int>()] = sectionPair.first;
+            if (myIni[sectionPair.first]["active"].as<bool>())
+            {
+                orderedId.push_back(myIni[sectionPair.first]["id"].as<int>());
+                orderedSections[myIni[sectionPair.first]["id"].as<int>()] = sectionPair.first;
+            }
         }
     }
 
@@ -296,8 +302,11 @@ std::vector<std::string> Inifile::getOrderedType(std::string &type)
     {
         if (myIni[sectionPair.first]["type"].as<std::string>().compare(type) == 0)
         {
-            orderedId.push_back(myIni[sectionPair.first]["id"].as<int>());
-            orderedSections[myIni[sectionPair.first]["id"].as<int>()] = sectionPair.first;
+            if (myIni[sectionPair.first]["active"].as<bool>())
+            {
+                orderedId.push_back(myIni[sectionPair.first]["id"].as<int>());
+                orderedSections[myIni[sectionPair.first]["id"].as<int>()] = sectionPair.first;
+            }
         }
     }
 

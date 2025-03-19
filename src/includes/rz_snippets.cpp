@@ -43,10 +43,11 @@ Snippets::~Snippets()
  *
  * @return std::string
  */
-std::string Snippets::helpSyntax()
+void Snippets::exitMsg()
 {
-    AboutType aboutStruct;
-    return std::format("call: {} db_ini sql_ini env type", aboutStruct.PROGEXECNAME);
+    AboutType about;
+    std::string msg = std::format("{} v{}-{}", about.PROGNAME, about.PROGVERSION, about.PROGBUILDTYPE);
+    PLOG(plog::info) << msg;
 }
 
 /**

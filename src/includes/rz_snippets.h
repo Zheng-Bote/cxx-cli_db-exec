@@ -36,7 +36,7 @@ public:
 
         std::string getProgInfo() const noexcept { return std::format("{} v{}-{}\n{}\n{}", PROGNAME, PROGVERSION, PROGBUILDTYPE, PROGDESCRIPTION, PROGHOMEPAGE); }
     };
-    std::string helpSyntax();
+    void exitMsg();
 
     enum class Status
     {

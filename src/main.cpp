@@ -3,15 +3,20 @@
  * @author ZHENG Robert (www.robert.hase-zheng.net)
  * @brief main program
  * @details executes sql in an ordered way
- * @version 0.3.0
+ * @version 1.0.0
  * @date 2025-03-17
  *
  * @copyright Copyright (c) 2025 ZHENG Robert
  *
  */
+
+// TODOS: clean-up
+
 #include <iostream>
 #include <print>
 #include <memory>
+#include <unordered_map>
+#include <stdlib.h>
 
 #include <plog/Appenders/ColorConsoleAppender.h>
 #include <plog/Appenders/RollingFileAppender.h>
@@ -26,96 +31,73 @@
 #include "includes/rz_parse_sqlfile.h"
 #include "includes/rz_fs.h"
 #include "includes/rz_strings.h"
+#include "includes/rz_options.h"
+#include "includes/rz_logpath.h"
 
 auto sptr_dbini_config = std::make_shared<Inifile>();
 auto sptr_sqlini_config = std::make_shared<Inifile>();
 auto sptr_snippets = std::make_shared<Snippets>();
+Snippets::AboutType about;
+
+void exit_handler();
 
 int main(int argc, char *argv[])
 {
+  std::atexit(exit_handler);
+  std::at_quick_exit(exit_handler);
 
-  // deployment =>
-  std::string dbSystemIni, dbSqlIni, env, type, msg, logfile = "";
-  if (argc < 5)
-  {
-    std::cerr << "\n\033[0;31m" << "FATAL: wrong parameters" << "\n\x1B[39m" << std::endl;
-    std::cout << sptr_snippets->helpSyntax() << std::endl;
-    exit(EXIT_FAILURE);
-  }
-  else
-  {
-    dbSystemIni = argv[1];
-    dbSqlIni = argv[2];
-    env = argv[3];
-    type = argv[4];
-  }
-
-  std::println("args: {} ini: {} env: {} type: {}", argc, dbSystemIni, dbSqlIni, env, type);
-  // <= deployment
-
+  std::string msg, logfilePath, logfileName, logfile = "";
+  std::unordered_map<std::string, std::string> args = rz_options::check_options(argc, argv);
   Filesystem fs;
-  Snippets::AboutType about;
   std::tuple<bool, std::string> ret;
 
-  sptr_dbini_config->setIniFileName(dbSystemIni);
-  sptr_snippets->checkFunctionReturn(sptr_dbini_config->loadIni(dbSystemIni), Snippets::Status::FATAL);
+  sptr_dbini_config->setIniFileName(args["dbSystemIni"]);
+  sptr_snippets->checkFunctionReturn(sptr_dbini_config->loadIni(args["dbSystemIni"]), Snippets::Status::FATAL);
 
   /* ##### Logfile ##### */
   // TODOS: passwords or other sensitive data in logfile
   msg = "logfile_path";
-  logfile = std::filesystem::current_path();
-  ret = sptr_dbini_config->getStringValue(env, msg);
+  logfileName = about.PROGEXECNAME + ".log";
+  ret = sptr_dbini_config->getStringValue(args["env"], msg);
   sptr_snippets->checkFunctionReturn(ret, Snippets::Status::WARNING);
   if (std::get<0>(ret))
   {
-    ret = fs.isDirectory(std::get<1>(ret));
-    if (!std::get<0>(ret))
-    {
-      ret = fs.createDirectories(std::get<1>(ret));
-      sptr_snippets->checkFunctionReturn(ret, Snippets::Status::ERROR);
-      if (!std::get<0>(ret))
-      {
-        logfile = std::filesystem::current_path();
-      }
-      else
-      {
-        logfile = std::get<1>(ret);
-      }
-    }
-    else
-    {
-      logfile = logfile = std::get<1>(ret);
-    }
+    logfilePath = std::get<1>(ret);
+    ret = rz_logpath::checkLogPath(logfilePath, logfileName);
+    logfile = std::get<1>(ret);
   }
-  if (!logfile.ends_with("/"))
+  else
   {
-    logfile += "/";
+    logfilePath = std::filesystem::temp_directory_path();
+    ret = rz_logpath::checkLogPath(logfilePath, logfileName);
+    logfile = std::get<1>(ret);
   }
-  logfile += about.PROGEXECNAME + ".log";
-  std::ifstream file(logfile);
-  if (!file.is_open())
-  {
-    logfile = std::filesystem::current_path();
-    logfile += "/" + about.PROGEXECNAME + ".log";
-  }
+  /* ##### Logfile ##### */
 
-  static plog::RollingFileAppender<plog::TxtFormatter> fileAppender(logfile.c_str(), 5000, 3);
-  plog::init(plog::debug, &fileAppender);
+  static plog::RollingFileAppender<plog::TxtFormatter> fileAppender(logfile.c_str(), 10000, 3);
+  if (args["debug"].compare("yes") == 0)
+  {
+    plog::init(plog::debug, &fileAppender);
+  }
+  else
+  {
+    plog::init(plog::info, &fileAppender);
+  }
   plog::ColorConsoleAppender<plog::TxtFormatter> consoleAppender;
   plog::get()->addAppender(&consoleAppender); // Also add logging to the console.
-  PLOG(plog::none) << "Logfile: " << logfile;
+  PLOG(plog::info) << __FUNCTION__ << ": Logfile: " << logfile;
   // fileAppender.setFileName("SetFileNameBBB.log");
   /* ##### Logfile ##### */
 
-  sptr_sqlini_config->setIniFileName(dbSqlIni);
-  sptr_snippets->checkFunctionReturn(sptr_sqlini_config->loadIni(dbSqlIni), Snippets::Status::FATAL);
-  sptr_snippets->checkFunctionReturn(rz_db::setDbConnect(sptr_dbini_config, env), Snippets::Status::FATAL);
+  sptr_sqlini_config->setIniFileName(args["dbSqlIni"]);
+  sptr_snippets->checkFunctionReturn(sptr_sqlini_config->loadIni(args["dbSqlIni"]), Snippets::Status::FATAL);
+  sptr_snippets->checkFunctionReturn(rz_db::setDbConnect(sptr_dbini_config, args["env"]), Snippets::Status::FATAL);
 
   // Tests
   // Snippets::AboutType about;
   // std::println("Prog Info: {}", about.getProgInfo());
 
-  std::vector<std::string> sortedSections = sptr_sqlini_config->getOrderedType(type);
+  std::vector<std::string> sortedSections = sptr_sqlini_config->getOrderedType(args["type"]);
   for (const auto &section : sortedSections)
   {
     std::string sectionName = section;
@@ -210,4 +192,9 @@ int main(int argc, char *argv[])
   /* ##### the END ##### */
   // rz_db::closeDb(sptr_snippets);
   exit(EXIT_SUCCESS);
+}
+
+void exit_handler()
+{
+  // sptr_snippets->exitMsg();
 }
