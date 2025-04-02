@@ -357,6 +357,10 @@ Plog - portable, simple and extensible C++ logging library
 > \[!NOTE]
 > managed via the package manager [![Conan Center](https://img.shields.io/conan/v/plog)](https://conan.io/center/recipes/plog)
 
+### PQXX_LIB
+
+__tbd__
+
 ## folder structure
 
 <!-- readme-tree start -->
