@@ -33,6 +33,7 @@
     - [cxxopts](#cxxopts)
     - [inifile-cpp](#inifile-cpp)
     - [plog](#plog)
+    - [PQXX_LIB](#pqxx_lib)
   - [folder structure](#folder-structure)
 - [Authors and License](#authors-and-license)
   - [License](#license)
