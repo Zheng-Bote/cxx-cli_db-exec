@@ -398,6 +398,22 @@ __tbd__
 ├── do_compile.sh
 ├── docs
 │   ├── .gitkeep
+│   ├── architecture
+│   │   ├── 01_overview.md
+│   │   ├── 02_class_diagram.md
+│   │   ├── 03_sequence_diagram.md
+│   │   ├── 04_component_diagram.md
+│   │   ├── 05_deployment_diagram.md
+│   │   ├── 06_use_case_diagram.md
+│   │   ├── 07_activity_diagram.md
+│   │   ├── 08_state_machine_diagram.md
+│   │   ├── 09_timing_diagram.md
+│   │   ├── 10_interaction_overview_diagram.md
+│   │   ├── 11_communication_diagram.md
+│   │   ├── 12_object_diagram.md
+│   │   ├── 13_package_diagram.md
+│   │   ├── 14_profile_diagram.md
+│   │   └── README.md
 │   └── img
 │       └── console_logs.png
 ├── src
@@ -426,7 +442,7 @@ __tbd__
 │   └── main.cpp
 └── tree.bak
 
-11 directories, 42 files
+12 directories, 57 files
 ```
 <!-- readme-tree end -->
 
