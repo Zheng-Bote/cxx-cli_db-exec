@@ -113,6 +113,12 @@ command line tool to execute sql in an ordered way.
 > Decrypt before using and encrypt after using\
 > _see also:_ [qt-cli_file_encryption-decryption](https://github.com/Zheng-Bote/qt-cli_file_encryption-decryption)
 
+## Architecture
+
+This project provides comprehensive architectural insights described in multiple UML and diagrammatic views (Bounded Context, Sequences, State Machines, Components, etc.) generated with Mermaid JS.
+
+For a summary and detailed diagrams representing the structural and behavioral design of `cxx-cli_db-exec`, please see the [Architecture Documentation Directory](./docs/architecture/README.md).
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Usage
