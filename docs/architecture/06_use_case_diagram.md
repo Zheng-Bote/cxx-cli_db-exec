@@ -1,3 +1,11 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [06 Use Case Diagram](#06-use-case-diagram)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # 06 Use Case Diagram
 
 The use case diagram depicts the user interactions and objectives when utilizing the `cxx-cli_db-exec` tool.

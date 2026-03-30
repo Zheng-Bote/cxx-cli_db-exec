@@ -1,3 +1,12 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [Architecture Documentation](#architecture-documentation)
+  - [Index](#index)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Architecture Documentation
 
 Welcome to the architecture documentation for `cxx-cli_db-exec`. This directory contains automatically generated sequence, class, component, and interaction diagrams utilizing [Mermaid JS](https://mermaid.js.org/).

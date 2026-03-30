@@ -1,3 +1,11 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [02 Class Diagram](#02-class-diagram)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # 02 Class Diagram
 
 This diagram outlines the major classes and namespaces within the `cxx-cli_db-exec` codebase and their relationships.

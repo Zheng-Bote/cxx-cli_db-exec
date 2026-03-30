@@ -20,6 +20,7 @@
   - [Features](#features)
 - [Status](#status)
 - [Documentation](#documentation)
+  - [Architecture](#architecture)
   - [Usage](#usage)
     - [Example](#example)
       - [example DB system ini](#example-db-system-ini)

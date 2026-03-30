@@ -1,3 +1,11 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [08 State Machine Diagram](#08-state-machine-diagram)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # 08 State Machine Diagram
 
 This state machine diagram captures the connection lifecycle and operational states during the application execution.

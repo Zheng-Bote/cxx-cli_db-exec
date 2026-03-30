@@ -1,3 +1,11 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [04 Component Diagram](#04-component-diagram)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # 04 Component Diagram
 
 The component diagram details the physical packaging structure and sub-systems within the program.

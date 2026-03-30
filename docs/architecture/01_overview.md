@@ -1,3 +1,13 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [01 Overview Diagram](#01-overview-diagram)
+  - [Bounded Context Diagram](#bounded-context-diagram)
+  - [Interfaces Diagram](#interfaces-diagram)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # 01 Overview Diagram
 
 This document provides a high-level overview of the `cxx-cli_db-exec` architecture, detailing its context boundary and external interfaces.

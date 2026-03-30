@@ -1,3 +1,11 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [14 Profile Diagram](#14-profile-diagram)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # 14 Profile Diagram
 
 The profile diagram showcases custom stereotypes or specialized extensions applied to standard elements representing the codebase structure.

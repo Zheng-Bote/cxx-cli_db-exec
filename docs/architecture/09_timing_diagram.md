@@ -1,3 +1,11 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [09 Timing Diagram](#09-timing-diagram)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # 09 Timing Diagram
 
 The timing diagram conceptually represents the active execution state of critical system components across the application runtime.
